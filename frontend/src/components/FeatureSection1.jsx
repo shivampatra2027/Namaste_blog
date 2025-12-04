@@ -112,13 +112,12 @@ export const SkeletonOne = () => {
       <div
         className="w-full  p-5  mx-auto bg-white dark:bg-neutral-900 shadow-2xl group h-full">
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
-          {/* TODO */}
-          <img
-            src="/linear.webp"
-            alt="header"
-            width={800}
-            height={800}
-            className="h-full w-full aspect-square object-cover object-left-top rounded-sm" />
+          <div className="h-full w-full aspect-square rounded-sm bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+            <div className="text-white text-center p-8">
+              <h3 className="text-2xl font-bold mb-2">Issue Tracking</h3>
+              <p className="text-sm opacity-90">Manage your projects efficiently</p>
+            </div>
+          </div>
         </div>
       </div>
       <div
