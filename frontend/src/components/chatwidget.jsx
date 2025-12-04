@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Mic, StopCircle, X, Maximize2, Minimize2 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { FaUserAstronaut, FaRobot } from "react-icons/fa";
 import API from "../config/api.js";
 
