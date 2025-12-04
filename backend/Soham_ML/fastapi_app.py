@@ -25,7 +25,11 @@ app = FastAPI()
 # Allow frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=[
+        "https://blog-app-frontend-a7th.onrender.com",
+        "http://localhost:5173",
+        "http://localhost:5174"
+    ],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

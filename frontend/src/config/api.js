@@ -9,23 +9,34 @@
 
 // Determine the API base URL based on environment
 const getBaseUrl = () => {
-  // When in development, use localhost
+  // Always check environment variable first
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Fallback to localhost in development
   if (import.meta.env.DEV) {
     return 'http://localhost:5001';
   }
   
-  // When in production, use relative URL (assumes API is on same domain)
-  // or override with environment variable if specified
-  return import.meta.env.VITE_API_URL || '';
+  // Production fallback
+  return 'https://blog-app-backend-ysga.onrender.com';
 };
 
 // Chat service URL
 const getChatServiceUrl = () => {
+  // Always check environment variable first
+  if (import.meta.env.VITE_CHAT_SERVICE_URL) {
+    return import.meta.env.VITE_CHAT_SERVICE_URL;
+  }
+  
+  // Fallback to localhost in development
   if (import.meta.env.DEV) {
     return 'http://127.0.0.1:8000';
   }
   
-  return import.meta.env.VITE_CHAT_SERVICE_URL || '';
+  // Production fallback
+  return 'https://my-ml-api-z4zs.onrender.com';
 };
 
 const API = {
