@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Posts from "./pages/Posts"; 
 import CreatePost from "./pages/CreatePost";
-import ChatWidget from "./components/ChatWidgetTemp.jsx";
+import ChatWidget from "./components/ChatWidget.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
