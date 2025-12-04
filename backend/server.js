@@ -27,7 +27,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["https://blog-app-frontend-a7th.onrender.com", "http://localhost:5173"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
