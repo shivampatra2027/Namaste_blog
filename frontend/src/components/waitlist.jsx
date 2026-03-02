@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Sparkles, Code, Star, ExternalLink } from "lucide-react";
+import { ArrowRight, Sparkles, Code, Star, ExternalLink, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Particles } from "../components/ui/particles";
 import { Spotlight } from "../components/ui/spotlight";
@@ -51,11 +51,7 @@ export default function WaitlistPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="border-primary/10 from-primary/15 to-primary/5 mb-8 inline-flex items-center gap-2 rounded-full border bg-gradient-to-r px-4 py-2 backdrop-blur-sm">
-          <img
-            src="https://i.postimg.cc/2SRcktkT/Mvpblocks.webp"
-            alt="logo"
-            className="spin h-6 w-6"
-          />
+          <BookOpen className="h-6 w-6 text-primary animate-pulse" />
           <span className="text-sm font-medium">Blogs</span>
           <motion.div
             animate={{ x: [0, 5, 0] }}
