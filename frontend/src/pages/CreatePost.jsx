@@ -1,9 +1,10 @@
-import { useAuth, SignedOut, SignInButton } from "@clerk/clerk-react";
+import { SignInButton, SignedOut, useAuth } from "@clerk/clerk-react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Lock } from "lucide-react";
 import API from "../config/api.js";
 
 const CreatePost = () => {
@@ -27,27 +28,22 @@ const CreatePost = () => {
     e.preventDefault();
     try {
       const token = await getToken();
-
       await axios.post(API.url(API.endpoints.posts), formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      toast.success("🎉 Post Created! Let the party begin!", {
+      toast.success("Post created successfully.", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2500,
         theme: "colored",
-        icon: "🥳",
       });
 
-      setTimeout(() => {
-        navigate("/posts");
-      }, 3000);
+      setTimeout(() => navigate("/posts"), 1500);
     } catch (error) {
       console.error("Error creating post:", error);
-
-      toast.error("❌ Failed to create post. Try again!", {
+      toast.error("Failed to create post. Please try again.", {
         position: "top-right",
         autoClose: 3000,
         theme: "colored",
@@ -56,66 +52,99 @@ const CreatePost = () => {
   };
 
   return (
-    // Added 'relative' to act as a positioning anchor for the overlay
-    <div className="relative max-w-xl mx-auto mt-10 p-6 border rounded shadow-lg dark:border-gray-700">
-      {/* The overlay for signed-out users */}
-      <SignedOut>
-        <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg z-10 text-white text-center p-4">
-          <span className="text-5xl mb-4">🔒</span>
-          <h3 className="text-xl font-bold mb-2">Sign in to Create a Post</h3>
-          <p className="mb-6">Join the community to share your thoughts!</p>
-          <SignInButton mode="modal">
-            <button className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">
-              Sign In
-            </button>
-          </SignInButton>
-        </div>
-      </SignedOut>
+    <div className="min-h-screen py-8">
+      <div className="pro-shell">
+        <section className="pro-surface relative rounded-2xl p-6 md:p-8">
+          <SignedOut>
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-2xl bg-slate-950/65 px-4 text-center text-white backdrop-blur-sm">
+              <Lock className="h-10 w-10" />
+              <h3 className="mt-3 text-xl font-bold">Sign in to Create a Post</h3>
+              <p className="mt-2 text-sm text-slate-200">
+                Join the community to publish and share ideas.
+              </p>
+              <SignInButton mode="modal">
+                <button className="mt-5 rounded-lg bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-white hover:bg-[var(--accent-strong)]">
+                  Sign In
+                </button>
+              </SignInButton>
+            </div>
+          </SignedOut>
 
-      {/* The form is always rendered underneath, but is only interactive for signed-in users */}
-      <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <textarea
-          name="content"
-          placeholder="Content"
-          value={formData.content}
-          onChange={handleChange}
-          required
-          className="border p-2 rounded h-40 dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="text"
-          name="tag"
-          placeholder="Tag (optional)"
-          value={formData.tag}
-          onChange={handleChange}
-          className="border p-2 rounded dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          <h1 className="text-2xl font-bold text-[var(--text)] md:text-3xl">Create a New Post</h1>
+          <p className="mt-2 text-sm text-[var(--text-soft)]">
+            Share your thoughts with a clear title and high-quality content.
+          </p>
 
-        {userId ? (
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Submit Post
-          </button>
-        ) : (
-          <button
-            type="button"
-            disabled
-            className="bg-gray-500 text-white py-2 rounded flex items-center justify-center gap-2 cursor-not-allowed">
-            Submit Post
-          </button>
-        )}
-      </form>
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <div>
+              <label htmlFor="title" className="mb-1.5 block text-sm font-medium text-[var(--text-soft)]">
+                Title
+              </label>
+              <input
+                id="title"
+                type="text"
+                name="title"
+                placeholder="Enter a headline"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="pro-input"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="content"
+                className="mb-1.5 block text-sm font-medium text-[var(--text-soft)]"
+              >
+                Content
+              </label>
+              <textarea
+                id="content"
+                name="content"
+                placeholder="Write your post content"
+                value={formData.content}
+                onChange={handleChange}
+                required
+                rows={10}
+                className="pro-input min-h-56 resize-y"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="tag" className="mb-1.5 block text-sm font-medium text-[var(--text-soft)]">
+                Tag (optional)
+              </label>
+              <input
+                id="tag"
+                type="text"
+                name="tag"
+                placeholder="Example: technology"
+                value={formData.tag}
+                onChange={handleChange}
+                className="pro-input"
+              />
+            </div>
+
+            {userId ? (
+              <button
+                type="submit"
+                className="rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-strong)]"
+              >
+                Submit Post
+              </button>
+            ) : (
+              <button
+                type="button"
+                disabled
+                className="cursor-not-allowed rounded-lg bg-slate-500/70 px-5 py-2.5 text-sm font-semibold text-white opacity-85"
+              >
+                Submit Post
+              </button>
+            )}
+          </form>
+        </section>
+      </div>
     </div>
   );
 };

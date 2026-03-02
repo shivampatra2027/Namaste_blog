@@ -1,2 +1,92 @@
 @import "tailwindcss";
 
+:root {
+  --font-sans: "Sora", "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --bg: #f4f7fb;
+  --bg-muted: #eaf0f8;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: #ffffff;
+  --text: #111827;
+  --text-soft: #4b5563;
+  --border: rgba(15, 23, 42, 0.12);
+  --accent: #0f766e;
+  --accent-strong: #0b5f58;
+  --ring: rgba(15, 118, 110, 0.35);
+  --shadow-soft: 0 10px 35px rgba(2, 8, 23, 0.08);
+}
+
+.dark {
+  --bg: #07111c;
+  --bg-muted: #0f1b2b;
+  --surface: rgba(11, 20, 34, 0.74);
+  --surface-strong: rgba(17, 29, 46, 0.95);
+  --text: #e5edf7;
+  --text-soft: #9fb3c8;
+  --border: rgba(148, 163, 184, 0.28);
+  --accent: #2dd4bf;
+  --accent-strong: #14b8a6;
+  --ring: rgba(45, 212, 191, 0.3);
+  --shadow-soft: 0 16px 44px rgba(0, 0, 0, 0.4);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% -20%, #d1fae5 0%, transparent 42%),
+    radial-gradient(circle at 92% -25%, #bfdbfe 0%, transparent 38%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-muted) 100%);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 8% -20%, rgba(20, 184, 166, 0.16) 0%, transparent 42%),
+    radial-gradient(circle at 92% -25%, rgba(56, 189, 248, 0.13) 0%, transparent 38%),
+    linear-gradient(180deg, #060e19 0%, #0b1727 100%);
+}
+
+a {
+  color: inherit;
+}
+
+.pro-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.pro-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.pro-input {
+  width: 100%;
+  border-radius: 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.pro-input::placeholder {
+  color: var(--text-soft);
+}
+
+.pro-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+

@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
-import WritePost from "../components/WritePost.jsx";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import {
-  Snowflake,
-  UserCircle2,
-  ChevronDown,
-  ChevronUp,
-  Lock,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Lock, Newspaper, UserCircle2 } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
+import WritePost from "../components/WritePost.jsx";
 import API from "../config/api.js";
 
 function Posts() {
@@ -47,19 +41,17 @@ function Posts() {
       const savedPost = await response.json();
       setPosts((prevPosts) => [savedPost, ...prevPosts]);
 
-      toast.success("🎉 Post published successfully!", {
+      toast.success("Post published successfully.", {
         position: "top-right",
         autoClose: 3000,
         theme: "colored",
-        icon: "📝",
       });
 
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
+      setTimeout(() => setShowConfetti(false), 2500);
     } catch (error) {
       console.error("Error submitting post:", error);
-
-      toast.error(`❌ ${error.message}`, {
+      toast.error(`Error: ${error.message}`, {
         position: "top-right",
         autoClose: 3000,
         theme: "colored",
@@ -72,35 +64,43 @@ function Posts() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen py-8">
       {showConfetti && <Confetti width={width} height={height} />}
-      <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-        <div className="flex items-center space-x-2 pb-4 border-b border-blue-200 dark:border-blue-800">
-          <Snowflake className="w-8 h-8 text-blue-500 dark:text-blue-300" />
-          <h1 className="text-3xl font-extrabold text-gray-800 dark:text-gray-50">
-            Posts
-          </h1>
+      <div className="pro-shell space-y-6">
+        <div className="pro-surface rounded-2xl px-5 py-5 md:px-7">
+          <div className="flex items-center gap-3 pb-2">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)]">
+              <Newspaper className="h-5 w-5" />
+            </span>
+            <div>
+              <h1 className="text-2xl font-bold md:text-3xl">Community Posts</h1>
+              <p className="text-sm text-[var(--text-soft)]">
+                Read updates from the community or publish your own.
+              </p>
+            </div>
+          </div>
         </div>
 
         {userId ? (
           <WritePost onSubmit={handlePostSubmit} />
         ) : (
-          <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-md backdrop-saturate-150 border border-gray-300 dark:border-gray-700 rounded-xl p-6 shadow-md flex flex-col items-center justify-center gap-4 ">
-            <Lock className="w-8 h-8 text-gray-500 dark:text-gray-400 animate-pulse" />
-            <p className="text-gray-500 dark:text-gray-400 text-center">
-              Sign in to write a post
+          <div className="pro-surface rounded-2xl p-6 text-center">
+            <Lock className="mx-auto h-8 w-8 text-[var(--text-soft)]" />
+            <p className="mt-3 text-sm text-[var(--text-soft)]">
+              Sign in to write a post.
             </p>
             <button
               disabled
-              className="bg-gray-400 text-white py-2 px-4 rounded cursor-not-allowed opacity-70">
+              className="mt-4 cursor-not-allowed rounded-lg bg-slate-500/70 px-4 py-2 text-sm font-semibold text-white opacity-80"
+            >
               Publish Disabled
             </button>
           </div>
         )}
 
         {posts.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            No posts yet. Be the first to write!
+          <p className="py-4 text-center text-[var(--text-soft)]">
+            No posts yet. Be the first to write.
           </p>
         ) : (
           posts.map((post) => {
@@ -109,39 +109,36 @@ function Posts() {
               <div
                 key={post._id}
                 onClick={() => toggleExpand(post._id)}
-                className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-md backdrop-saturate-150 p-6 rounded-xl 
-                  border border-blue-200 dark:border-blue-700 shadow-lg dark:shadow-blue-900/50 
-                  transition-all duration-300 cursor-pointer 
-                  hover:shadow-xl hover:shadow-blue-200/80 
-                  focus:outline-none focus:ring-2 focus:ring-blue-300 
-                  active:bg-blue-50/40 dark:active:bg-gray-700/40">
-                <div className="flex items-start justify-between mb-2">
-                  <h2 className="text-xl font-extrabold text-blue-600 dark:text-blue-300 flex-1 pr-4">
+                className="pro-surface cursor-pointer rounded-2xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)]/45 md:p-6"
+              >
+                <div className="mb-2 flex items-start justify-between">
+                  <h2 className="flex-1 pr-4 text-xl font-bold text-[var(--text)]">
                     {post.title}
                   </h2>
 
                   <div className="flex flex-col items-end space-y-1">
-                    <div className="flex items-center space-x-1 text-sm font-medium text-gray-600 dark:text-gray-400">
-                      <UserCircle2 className="w-4 h-4" />
+                    <div className="flex items-center space-x-1 text-sm font-medium text-[var(--text-soft)]">
+                      <UserCircle2 className="h-4 w-4" />
                       <span>{post.authorName || "Anonymous"}</span>
                     </div>
                     {isExpanded ? (
-                      <ChevronUp className="w-4 h-4 text-blue-500" />
+                      <ChevronUp className="h-4 w-4 text-[var(--accent)]" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-blue-500" />
+                      <ChevronDown className="h-4 w-4 text-[var(--accent)]" />
                     )}
                   </div>
                 </div>
 
                 <p
-                  className={`mt-2 text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 overflow-hidden ${
+                  className={`mt-2 overflow-hidden leading-relaxed text-[var(--text-soft)] transition-all duration-300 ${
                     isExpanded ? "max-h-full" : "max-h-16 line-clamp-2"
-                  }`}>
+                  }`}
+                >
                   {post.content}
                 </p>
 
                 {post.createdAt && (
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 border-t border-blue-100 dark:border-blue-800 pt-2">
+                  <p className="mt-4 border-t border-[var(--border)] pt-3 text-xs text-[var(--text-soft)]">
                     Posted: {new Date(post.createdAt).toLocaleString()}
                   </p>
                 )}
